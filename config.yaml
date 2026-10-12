@@ -1,0 +1,33 @@
+# model-notifier config. ${VAR} is expanded from the environment. See AGENTS.md.
+interval: 30m            # default poll interval
+state_file: /data/state.json
+listen: ":8080"
+
+notifiers:
+  - name: tg
+    type: telegram
+    token: ${TG_BOT_TOKEN}
+    chat_id: ${TG_CHAT_ID}
+
+providers:
+  - name: anthropic
+    sources:
+      - name: models-overview
+        type: webpage
+        url: https://platform.claude.com/docs/en/models/overview
+        interval: 1h
+        items: "//table//tr[th[contains(., 'Claude API ID')]]/td"   # one item per match; Key = normalize-space(text)
+        fields:                       # "./..." → relative to item node; otherwise document-wide, zipped by index
+          name: "//table/thead//th//a"
+          link: "//table/thead//th//a/@href"                        # 'link' field becomes Item.Link, resolved against url
+        template: |
+          🆕 <b>Anthropic</b> listed a new model: <b>{{.Fields.name}}</b>
+          ID: <code>{{.Key}}</code>
+          <a href="{{.Link}}">Docs</a>
+      - name: python-sdk-releases
+        type: github_releases
+        url: https://github.com/anthropics/anthropic-sdk-python/releases.atom
+        filter: 'claude-[a-z]+-\d[\d-]*'   # regex on title+content; omit → every release
+        template: |
+          📦 <b>anthropic-sdk-python {{.Fields.title}}</b> adds: <code>{{.Fields.matches}}</code>
+          <a href="{{.Link}}">Release notes</a>

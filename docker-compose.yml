@@ -1,0 +1,13 @@
+services:
+  model-notifier:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - state:/data
+      - ./config.yaml:/etc/model-notifier/config.yaml:ro
+    ports:
+      - "127.0.0.1:8080:8080"
+
+volumes:
+  state:

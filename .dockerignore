@@ -1,0 +1,7 @@
+.git
+.github
+.env
+bin/
+state.json
+data/
+*.md
