@@ -10,6 +10,7 @@ import (
 	"strings"
 	"sync"
 	"testing"
+	"time"
 
 	"github.com/hutoroff/model-notifier/internal/notify"
 	"github.com/hutoroff/model-notifier/internal/source"
@@ -75,5 +76,29 @@ func TestSeedEmpty(t *testing.T) {
 	m := &Monitor{sources: []*Entry{e}, state: st}
 	if _, err := m.Check(context.Background(), e); err != nil || !st.Has("p/s") {
 		t.Fatalf("empty seed not recorded: %v", err)
+	}
+}
+
+type limitedSource struct{ calls int }
+
+func (l *limitedSource) Fetch(context.Context) ([]source.Item, error) {
+	l.calls++
+	return nil, &source.RateLimitedError{URL: "u", Status: "429", Until: time.Now().Add(time.Hour)}
+}
+
+func TestRateLimitPause(t *testing.T) {
+	st, _ := state.Load(filepath.Join(t.TempDir(), "s.json"))
+	src := &limitedSource{}
+	e := &Entry{ID: "p/s", Src: src, Tmpl: template.Must(template.New("t").Parse("{{.Key}}"))}
+	m := &Monitor{sources: []*Entry{e}, state: st}
+	if _, err := m.Check(context.Background(), e); err == nil || src.calls != 1 {
+		t.Fatalf("first: err=%v calls=%d", err, src.calls)
+	}
+	if _, err := m.Check(context.Background(), e); err == nil || !strings.Contains(err.Error(), "rate-limited") || src.calls != 1 {
+		t.Fatalf("paused: err=%v calls=%d", err, src.calls)
+	}
+	e.pausedUntil = time.Now().Add(-time.Second)
+	if m.Check(context.Background(), e); src.calls != 2 {
+		t.Fatalf("after pause: calls=%d", src.calls)
 	}
 }

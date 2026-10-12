@@ -95,6 +95,7 @@ must stay within Telegram's HTML subset (`b i u s a code pre blockquote`; no `<b
 - Set diff ignores removals: items disappearing from a source are not reported and stay in state.
 - First run for a source seeds state silently (no messages) unless `-notify-on-seed`.
 - A failed send is not recorded, so the item is retried next tick.
+- 429/503 (or 403 + `Retry-After`) pauses that source until `Retry-After` (capped at 24h); `POST /run` obeys the pause. Without the header the next tick just retries.
 - Telegram HTML mode rejects unknown tags and unescaped `<`, `>`, `&`; keep authored tags in the template, let `html/template` escape data.
 - Live smoke test: `make once ARGS=-notify-on-seed` with real `TG_BOT_TOKEN`/`TG_CHAT_ID` exported, then `rm state.json`.
 - `config.yaml` points `state_file` at `/data/state.json` (container); `make run`/`make once` rewrite it to `./state.json` in `bin/config.local.yaml`.

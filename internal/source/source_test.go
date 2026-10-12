@@ -1,11 +1,16 @@
 package source
 
 import (
+	"context"
+	"errors"
+	"net/http"
+	"net/http/httptest"
 	"os"
 	"regexp"
 	"slices"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/hutoroff/model-notifier/internal/config"
 )
@@ -265,5 +270,42 @@ func TestXAISDK(t *testing.T) {
 func TestBadXPath(t *testing.T) {
 	if _, err := newWebpage(config.Source{Items: "//["}); err == nil {
 		t.Error("want error")
+	}
+}
+
+func TestRateLimited(t *testing.T) {
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+		w.Header().Set("Retry-After", "120")
+		w.WriteHeader(http.StatusTooManyRequests)
+	}))
+	defer srv.Close()
+	s, err := newGitHub(config.Source{URL: srv.URL})
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = s.Fetch(context.Background())
+	rl, ok := errors.AsType[*RateLimitedError](err)
+	if !ok {
+		t.Fatalf("want RateLimitedError, got %v", err)
+	}
+	if d := time.Until(rl.Until); d < 110*time.Second || d > 120*time.Second {
+		t.Fatalf("until in %s, want ~120s", d)
+	}
+}
+
+func TestRetryAfter(t *testing.T) {
+	now := time.Date(2026, 10, 12, 12, 0, 0, 0, time.UTC)
+	for h, want := range map[string]time.Duration{
+		"120":                           2 * time.Minute,
+		"Mon, 12 Oct 2026 12:30:00 GMT": 30 * time.Minute,
+		"Mon, 12 Oct 2026 11:00:00 GMT": 0,
+		"":                              0,
+		"junk":                          0,
+		"-5":                            0,
+		"9999999":                       24 * time.Hour,
+	} {
+		if got := retryAfter(h, now); got != want {
+			t.Errorf("retryAfter(%q) = %s, want %s", h, got, want)
+		}
 	}
 }

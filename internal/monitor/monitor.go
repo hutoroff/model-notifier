@@ -3,6 +3,7 @@ package monitor
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"html/template"
 	"log/slog"
@@ -22,7 +23,8 @@ type Entry struct {
 	Tmpl     *template.Template // data = source.Item
 	Interval time.Duration
 
-	mu sync.Mutex // serializes ticker and /run checks
+	mu          sync.Mutex // serializes ticker and /run checks
+	pausedUntil time.Time  // set from a source's Retry-After; guarded by mu
 }
 
 type Monitor struct {
@@ -66,8 +68,14 @@ func New(cfg *config.Config, st *state.State, notifyOnSeed bool) (*Monitor, erro
 func (m *Monitor) Check(ctx context.Context, e *Entry) (int, error) {
 	e.mu.Lock()
 	defer e.mu.Unlock()
+	if time.Now().Before(e.pausedUntil) {
+		return 0, fmt.Errorf("rate-limited until %s", e.pausedUntil.Format(time.RFC3339))
+	}
 	items, err := e.Src.Fetch(ctx)
 	if err != nil {
+		if rl, ok := errors.AsType[*source.RateLimitedError](err); ok {
+			e.pausedUntil = rl.Until
+		}
 		return 0, err
 	}
 	seeding := !m.state.Has(e.ID)
