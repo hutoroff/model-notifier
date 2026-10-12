@@ -37,3 +37,5 @@ fixtures: ## refresh test snapshots from live sources
 	curl -fsSL -o internal/source/testdata/anthropic-releases.atom https://github.com/anthropics/anthropic-sdk-python/releases.atom
 	curl -fsSL -o internal/source/testdata/openai-changelog.html https://developers.openai.com/api/docs/changelog
 	curl -fsSL -o internal/source/testdata/openai-releases.atom https://github.com/openai/openai-python/releases.atom
+	curl -fsSL -o internal/source/testdata/google-changelog.html https://ai.google.dev/gemini-api/docs/changelog
+	curl -fsSL -o internal/source/testdata/google-releases.atom https://github.com/googleapis/python-genai/releases.atom

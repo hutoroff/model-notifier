@@ -53,3 +53,26 @@ providers:
         template: |
           📦 <b>openai-python {{.Fields.title}}</b>: {{.Fields.matches}}
           <a href="{{.Link}}">Release notes</a>
+
+  - name: google
+    sources:
+      - name: changelog
+        type: webpage
+        url: https://ai.google.dev/gemini-api/docs/changelog
+        interval: 1h
+        # <code> model IDs inside dated entries (h2[@data-text] + following siblings). -latest aliases skipped.
+        items: "//h2[@data-text]/following-sibling::ul//code[starts-with(normalize-space(.),'gemini-')][not(contains(.,'-latest'))]"
+        fields:
+          date: "./preceding::h2[@data-text][1]/@data-text"   # entry date, e.g. "October 8, 2026"
+          anchor: "./preceding::h2[@data-text][1]/@id"        # e.g. "10-08-2026"; bare id, so the URL is built in the template
+        template: |
+          🆕 <b>Google</b> changelog lists a new model: <code>{{.Key}}</code> ({{.Fields.date}})
+          <a href="https://ai.google.dev/gemini-api/docs/changelog#{{.Fields.anchor}}">Changelog</a>
+      - name: python-sdk-releases
+        type: github_releases
+        url: https://github.com/googleapis/python-genai/releases.atom
+        # "Add …" release line naming a gemini-N id or a Gemini … model(s).
+        filter: '(?i)\badd\b[^()]*?(?:gemini-\d[\w.-]*|gemini[- ][^()]*?\bmodels?\b)[^()]*'
+        template: |
+          📦 <b>python-genai {{.Fields.title}}</b>: {{.Fields.matches}}
+          <a href="{{.Link}}">Release notes</a>

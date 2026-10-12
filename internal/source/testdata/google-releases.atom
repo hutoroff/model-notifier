@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" xml:lang="en-US">
+  <id>tag:github.com,2008:https://github.com/googleapis/python-genai/releases</id>
+  <link type="text/html" rel="alternate" href="https://github.com/googleapis/python-genai/releases"/>
+  <link type="application/atom+xml" rel="self" href="https://github.com/googleapis/python-genai/releases.atom"/>
+  <title>Release notes from python-genai</title>
+  <updated>2026-10-07T21:40:24Z</updated>
+  <entry>
+    <id>tag:github.com,2008:Repository/899744518/v2.29.0</id>
+    <updated>2026-10-07T21:40:38Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/googleapis/python-genai/releases/tag/v2.29.0"/>
+    <title>v2.29.0</title>
+    <content type="html">&lt;h2&gt;&lt;a href=&quot;https://github.com/googleapis/python-genai/compare/v2.28.0...v2.29.0&quot;&gt;2.29.0&lt;/a&gt; (2026-10-07)&lt;/h2&gt;
+&lt;h3&gt;Features&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Support &lt;code&gt;&quot;allowlist&quot;: &quot;disabled&quot;&lt;/code&gt; in environment network config. (&lt;a href=&quot;https://github.com/googleapis/python-genai/commit/fa4acc70a56fe8118914d58a0d8767d5b3c51f21&quot;&gt;fa4acc7&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;Update discovery doc (&lt;a href=&quot;https://github.com/googleapis/python-genai/commit/84bf19c9394bb3cc41f56c11d125cf6e5de86e3a&quot;&gt;84bf19c&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Bug Fixes&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Only log direct AFC warning when functions are present in the config (&lt;a href=&quot;https://github.com/googleapis/python-genai/commit/6e36aaae5b03b955de6297b71f57452cfc744ac8&quot;&gt;6e36aaa&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Documentation&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Refresh docs for 2.28.0 (&lt;a href=&quot;https://github.com/googleapis/python-genai/commit/618f0aa89c7fa61be973fabfa5747fb93a21b1bf&quot;&gt;618f0aa&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;Update code samples to gemini-flash-latest, gemini-3.1-flash-lite-image, and gemini-3.8-flash-tts (&lt;a href=&quot;https://github.com/googleapis/python-genai/commit/5673494fdb2a5db875e0d7f68c18bb2e1029af12&quot;&gt;5673494&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;Update generated SDK docstring examples to use gemini-flash-latest (&lt;a href=&quot;https://github.com/googleapis/python-genai/commit/28e0915b4b57607badafb3181b19c67fb7b475c9&quot;&gt;28e0915&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;</content>
+    <author>
+      <name>release-please[bot]</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/in/40688?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/899744518/v2.28.0</id>
+    <updated>2026-10-02T17:30:42Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/googleapis/python-genai/releases/tag/v2.28.0"/>
+    <title>v2.28.0</title>
+    <content type="html">&lt;h2&gt;&lt;a href=&quot;https://github.com/googleapis/python-genai/compare/v2.27.0...v2.28.0&quot;&gt;2.28.0&lt;/a&gt; (2026-10-02)&lt;/h2&gt;
+&lt;h3&gt;Features&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Add &lt;code&gt;lyria-3.5&lt;/code&gt;, &lt;code&gt;gemini-omni-1.1-flash&lt;/code&gt;, and &lt;code&gt;gemini-omni-flash-preview&lt;/code&gt; to Interactions &lt;code&gt;Model&lt;/code&gt; enum (&lt;a href=&quot;https://github.com/googleapis/python-genai/commit/1e8c0cc7e3894d280194a94fc4b871650ca8446b&quot;&gt;1e8c0cc&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;Support continuation_token in Interactions (&lt;a href=&quot;https://github.com/googleapis/python-genai/commit/d40ca700c72da479f270170885b728b0d7171e06&quot;&gt;d40ca70&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;</content>
+    <author>
+      <name>release-please[bot]</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/in/40688?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/899744518/v2.27.0</id>
+    <updated>2026-10-01T22:10:34Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/googleapis/python-genai/releases/tag/v2.27.0"/>
+    <title>v2.27.0</title>
+    <content type="html">&lt;h2&gt;&lt;a href=&quot;https://github.com/googleapis/python-genai/compare/v2.26.0...v2.27.0&quot;&gt;2.27.0&lt;/a&gt; (2026-10-01)&lt;/h2&gt;
+&lt;h3&gt;Features&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Support continuation_token in GenerateContent (&lt;a href=&quot;https://github.com/googleapis/python-genai/commit/3931b290901eb616d9c4098ed6ba57c9d40a8d23&quot;&gt;3931b29&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Documentation&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Update docs (&lt;a href=&quot;https://github.com/googleapis/python-genai/commit/c6212e9670c731312002a78c89d2895235381b92&quot;&gt;c6212e9&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;</content>
+    <author>
+      <name>release-please[bot]</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/in/40688?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/899744518/v2.26.0</id>
+    <updated>2026-09-30T22:17:07Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/googleapis/python-genai/releases/tag/v2.26.0"/>
+    <title>v2.26.0</title>
+    <content type="html">&lt;h2&gt;&lt;a href=&quot;https://github.com/googleapis/python-genai/compare/v2.25.0...v2.26.0&quot;&gt;2.26.0&lt;/a&gt; (2026-09-30)&lt;/h2&gt;
+&lt;h3&gt;Features&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Add gcs_metrics_uri for exporting tuning job metrics. (&lt;a href=&quot;https://github.com/googleapis/python-genai/commit/b6535e822a6a984bec43056551b2788cd61509f0&quot;&gt;b6535e8&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;Add Gemini 3.8 Flash TTS and Gemini 3.8 Flash Lite TTS models to SDKs (&lt;a href=&quot;https://github.com/googleapis/python-genai/commit/0cad6ca7cfc4dce6f58784f546603d8cc8a5f921&quot;&gt;0cad6ca&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;genai-sdk:&lt;/strong&gt; Add environments dedicated module and from_environment support (&lt;a href=&quot;https://github.com/googleapis/python-genai/commit/7672ff6a08b92d45f6718e1195845b818705bad6&quot;&gt;7672ff6&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;Include labels for LiveClientSetup (&lt;a href=&quot;https://github.com/googleapis/python-genai/commit/4742c9a5c213a587add126a500a271824e2f0add&quot;&gt;4742c9a&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;Support labels for Gemini API GenerateContent (&lt;a href=&quot;https://github.com/googleapis/python-genai/commit/81ffa26e829eec4c440133d68062a1a3a572f82e&quot;&gt;81ffa26&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Bug Fixes&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Build a model before reading its field annotations when pruning extra fields (&lt;a href=&quot;https://github.com/googleapis/python-genai/commit/7845acd5bbbaf36e20cc3687be621d402c06013b&quot;&gt;7845acd&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;cli:&lt;/strong&gt; Include auto-assigned flag shorthands in &lt;code&gt;--usage&lt;/code&gt; schema (&lt;a href=&quot;https://github.com/googleapis/python-genai/commit/2579b948bc9c5da28efe07aab0df89195a3590be&quot;&gt;2579b94&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;Ensure Vertex AI interactions client uses default timeout=None instead of 5s. (&lt;a href=&quot;https://github.com/googleapis/python-genai/commit/feef230daf9a31fe9dec433483d8e3066b33fe4d&quot;&gt;feef230&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;Reap aiohttp sessions and auth locks belonging to closed event loops (&lt;a href=&quot;https://github.com/googleapis/python-genai/commit/6d012889752f65c1a51d0ad6e5970fc97d19c4ca&quot;&gt;6d01288&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;Use &lt;code&gt;CreateAgentInteraction&lt;/code&gt; for &lt;code&gt;Trigger.interaction&lt;/code&gt; and &lt;code&gt;TriggerCreateParams.interaction&lt;/code&gt; (&lt;a href=&quot;https://github.com/googleapis/python-genai/commit/046ccfb1beba06f229cfde689ac43283853eb7f4&quot;&gt;046ccfb&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Documentation&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Clarify Voice expire_time and store TTL behavior in GAOS SDK (&lt;a href=&quot;https://github.com/googleapis/python-genai/commit/94b371d7ee7b2241be32a1efb78e5fa8cfb791de&quot;&gt;94b371d&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;overlays:&lt;/strong&gt; Describe &lt;code&gt;environment&lt;/code&gt; and &lt;code&gt;path&lt;/code&gt; on GetEnvironmentFiles and pin environment ID in &lt;code&gt;environments&lt;/code&gt; get/delete examples (&lt;a href=&quot;https://github.com/googleapis/python-genai/commit/f15d1482d74746d2d7b7bff5696b896da264a89d&quot;&gt;f15d148&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;Regenerate docs for 1.2.0 (&lt;a href=&quot;https://github.com/googleapis/python-genai/commit/938dd7385caa68e1d9fff2ef2507fdbf1cd7eaab&quot;&gt;938dd73&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;</content>
+    <author>
+      <name>release-please[bot]</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/in/40688?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/899744518/v2.25.0</id>
+    <updated>2026-09-22T03:06:24Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/googleapis/python-genai/releases/tag/v2.25.0"/>
+    <title>v2.25.0</title>
+    <content type="html">&lt;h2&gt;&lt;a href=&quot;https://github.com/googleapis/python-genai/compare/v2.24.0...v2.25.0&quot;&gt;2.25.0&lt;/a&gt; (2026-09-22)&lt;/h2&gt;
+&lt;h3&gt;Features&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Add sample_audio to Voice in GAOS SDK (&lt;a href=&quot;https://github.com/googleapis/python-genai/commit/a011633c2db0078019162880764e06cd85a5c4ff&quot;&gt;a011633&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;Add Voices API resource to GAOS SDK (&lt;a href=&quot;https://github.com/googleapis/python-genai/commit/c45b94e7a0e0dcd5dcc2590f62f5d223f8c90e99&quot;&gt;c45b94e&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;Expose SpeechMetadata, VoiceConfig.voice, and SpeechAnnotation in public GenAI SDKs (&lt;a href=&quot;https://github.com/googleapis/python-genai/commit/a6d32434b848ada0a635dae38406811dbf4a7c67&quot;&gt;a6d3243&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;Support field.value_field syntax for map add_union_value annotations. (&lt;a href=&quot;https://github.com/googleapis/python-genai/commit/ad00721acd27258ae45180dbb7dadfaa8f8bed71&quot;&gt;ad00721&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;Update discovery doc (&lt;a href=&quot;https://github.com/googleapis/python-genai/commit/fa917165422ebd78f69bfd7a1b6285d2ad35780b&quot;&gt;fa91716&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;Wire voice into sdk (&lt;a href=&quot;https://github.com/googleapis/python-genai/commit/e1d68b4855bc58eb30e455c37b4531ff09f4abb9&quot;&gt;e1d68b4&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Bug Fixes&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Sanitize path parameter descriptions in GAOS OpenAPI generation (&lt;a href=&quot;https://github.com/googleapis/python-genai/commit/25b00947000778c45fd804dffee282f3bdd7e3e7&quot;&gt;25b0094&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;</content>
+    <author>
+      <name>release-please[bot]</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/in/40688?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/899744518/v2.24.0</id>
+    <updated>2026-09-16T22:11:13Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/googleapis/python-genai/releases/tag/v2.24.0"/>
+    <title>v2.24.0</title>
+    <content type="html">&lt;h2&gt;&lt;a href=&quot;https://github.com/googleapis/python-genai/compare/v2.23.0...v2.24.0&quot;&gt;2.24.0&lt;/a&gt; (2026-09-16)&lt;/h2&gt;
+&lt;h3&gt;Features&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Add credential APIs resource to gaos. (&lt;a href=&quot;https://github.com/googleapis/python-genai/commit/d301255a4d3f6799abd308fb4fb3d76a0a40a6fe&quot;&gt;d301255&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;Add RetrievalCallStep and RetrievalResultStep to interactions schema and SDKs. (&lt;a href=&quot;https://github.com/googleapis/python-genai/commit/9052efddccae9f91e699d9b76e0d5a3e032637f5&quot;&gt;9052efd&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;Implement environments files upload and download across Python and TypeScript SDKs (&lt;a href=&quot;https://github.com/googleapis/python-genai/commit/fc0834dbb95b8e70023caa5dfff7133e7ceb5a7a&quot;&gt;fc0834d&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;Wire credential APIs resource to sdk. (&lt;a href=&quot;https://github.com/googleapis/python-genai/commit/bf0d457560c4782c7b07b2bf79348c5249f55307&quot;&gt;bf0d457&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Bug Fixes&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Do not run functions once the automatic function calling budget is spent (&lt;a href=&quot;https://github.com/googleapis/python-genai/commit/2580638558b182b89abcfcb94bf2b164b7f81c7b&quot;&gt;2580638&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Documentation&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Update GenAI SDK README files to use gemini-flash-latest (&lt;a href=&quot;https://github.com/googleapis/python-genai/commit/1feb9991f8c3500e24214b61dabcc63995898dce&quot;&gt;1feb999&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;Update Python Gen AI SDK README for Gemini 3.8 Flash (&lt;a href=&quot;https://github.com/googleapis/python-genai/commit/b88fded4adda37fcc8d1cc4bf49ef3fc11ecfec4&quot;&gt;b88fded&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;</content>
+    <author>
+      <name>release-please[bot]</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/in/40688?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/899744518/v2.23.0</id>
+    <updated>2026-09-10T22:15:45Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/googleapis/python-genai/releases/tag/v2.23.0"/>
+    <title>v2.23.0</title>
+    <content type="html">&lt;h2&gt;&lt;a href=&quot;https://github.com/googleapis/python-genai/compare/v2.22.0...v2.23.0&quot;&gt;2.23.0&lt;/a&gt; (2026-09-10)&lt;/h2&gt;
+&lt;h3&gt;Features&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Add from_environment support for environment copying (&lt;a href=&quot;https://github.com/googleapis/python-genai/commit/e6d316866aca21c7d05c5495ca6355f48ca040fc&quot;&gt;e6d3168&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;Support dynamic turn completion via interaction_status in live.py receive() (&lt;a href=&quot;https://github.com/googleapis/python-genai/commit/455df80f3c308b6e0cb6f2e0d7583ab2146aee8f&quot;&gt;455df80&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Bug Fixes&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Remove unused field from FunctionResultDelta (&lt;a href=&quot;https://github.com/googleapis/python-genai/commit/28430799e32430265a1f8012383739a481d94629&quot;&gt;2843079&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;</content>
+    <author>
+      <name>release-please[bot]</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/in/40688?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/899744518/v2.22.0</id>
+    <updated>2026-09-02T17:47:57Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/googleapis/python-genai/releases/tag/v2.22.0"/>
+    <title>v2.22.0</title>
+    <content type="html">&lt;h2&gt;&lt;a href=&quot;https://github.com/googleapis/python-genai/compare/v2.21.0...v2.22.0&quot;&gt;2.22.0&lt;/a&gt; (2026-09-02)&lt;/h2&gt;
+&lt;h3&gt;Features&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Add Gemini 3.8 Flash model to SDKs and update Flash model descriptions (&lt;a href=&quot;https://github.com/googleapis/python-genai/commit/660001adf8ccbd6a4a54a414cbdaf26f07571f7e&quot;&gt;660001a&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;</content>
+    <author>
+      <name>release-please[bot]</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/in/40688?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/899744518/v2.21.0</id>
+    <updated>2026-08-31T21:07:16Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/googleapis/python-genai/releases/tag/v2.21.0"/>
+    <title>v2.21.0</title>
+    <content type="html">&lt;h2&gt;&lt;a href=&quot;https://github.com/googleapis/python-genai/compare/v2.20.0...v2.21.0&quot;&gt;2.21.0&lt;/a&gt; (2026-08-31)&lt;/h2&gt;
+&lt;h3&gt;Features&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Add destination parameter to client.files.download to support streaming downloads to disk or file-like objects (&lt;a href=&quot;https://github.com/googleapis/python-genai/commit/fcf9e3fe8bdf9cc18a09a7fff3d65742913a6b06&quot;&gt;fcf9e3f&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;Add support for the audio/webm MIME type. (&lt;a href=&quot;https://github.com/googleapis/python-genai/commit/67ec3d75df7ee1bf984e7ae8a6d45894579375d1&quot;&gt;67ec3d7&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;Add translation_config SDK support for GEAP. (&lt;a href=&quot;https://github.com/googleapis/python-genai/commit/ff153a757362d776b935819bcc13aa20d9696a2a&quot;&gt;ff153a7&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;Add Video Understanding support to the Interactions API (&lt;a href=&quot;https://github.com/googleapis/python-genai/commit/2cc99a9b365bda40ad60da33b206a31c096a79c5&quot;&gt;2cc99a9&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Bug Fixes&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Expose ProcessingCallStep and ProcessingResultStep in Interactions SDK (&lt;a href=&quot;https://github.com/googleapis/python-genai/commit/df0ab55c09994da4de26ad3038f206fc986ced3a&quot;&gt;df0ab55&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;</content>
+    <author>
+      <name>release-please[bot]</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/in/40688?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/899744518/v2.20.0</id>
+    <updated>2026-08-25T21:14:10Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/googleapis/python-genai/releases/tag/v2.20.0"/>
+    <title>v2.20.0</title>
+    <content type="html">&lt;h2&gt;&lt;a href=&quot;https://github.com/googleapis/python-genai/compare/v2.19.0...v2.20.0&quot;&gt;2.20.0&lt;/a&gt; (2026-08-25)&lt;/h2&gt;
+&lt;h3&gt;Features&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Add AudioTranscriptionConfigMode (&lt;a href=&quot;https://github.com/googleapis/python-genai/commit/4a809546fdba31376d483ec018ec27f02e717d1c&quot;&gt;4a80954&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;Add environment files support and scotty file download helper (&lt;a href=&quot;https://github.com/googleapis/python-genai/commit/30742636766a888f5ebe3eb272f912c843c74564&quot;&gt;3074263&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;Add TYPE_JPEG2000 to VideoContent.MimeType enum (&lt;a href=&quot;https://github.com/googleapis/python-genai/commit/ef39c40eb053aecdf0ae791410ecfe598281252d&quot;&gt;ef39c40&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;</content>
+    <author>
+      <name>release-please[bot]</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/in/40688?s=60&amp;v=4"/>
+  </entry>
+</feed>

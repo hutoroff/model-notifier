@@ -156,6 +156,67 @@ func TestOpenAISDK(t *testing.T) {
 	}
 }
 
+func TestGoogleChangelog(t *testing.T) {
+	items := parseWeb(t, "google/changelog", "google-changelog.html")
+	k := keys(items)
+	if len(k) != 87 {
+		t.Errorf("got %d models, want 87: %v", len(k), k)
+	}
+	if it := items[0]; it.Key != "gemini-3.7-flash" || it.Fields["date"] != "October 8, 2026" || it.Fields["anchor"] != "10-08-2026" {
+		t.Errorf("first = %+v", it)
+	}
+	seen := map[string]bool{}
+	for _, key := range k {
+		if seen[key] {
+			t.Errorf("duplicate %s", key)
+		}
+		seen[key] = true
+		if !strings.HasPrefix(key, "gemini-") || strings.Contains(key, "-latest") {
+			t.Errorf("unexpected key %s", key)
+		}
+	}
+	for _, want := range []string{"gemini-3.8-flash", "gemini-nano-banana-2.1", "gemini-omni-1.1-flash"} {
+		if !slices.Contains(k, want) {
+			t.Errorf("missing %s", want)
+		}
+	}
+}
+
+func TestGoogleSDK(t *testing.T) {
+	sc := cfg(t, "google/python-sdk-releases")
+	items := parseFeed(t, sc, "google-releases.atom")
+	// fixture has three model-adding releases: v2.28.0 (omni), v2.26.0 (3.8 Flash TTS), v2.22.0 (3.8 Flash)
+	var titles []string
+	for _, it := range items {
+		titles = append(titles, it.Fields["title"])
+	}
+	if got := strings.Join(titles, ","); got != "v2.28.0,v2.26.0,v2.22.0" {
+		t.Fatalf("titles = %s", got)
+	}
+	if it := items[0]; !strings.Contains(it.Fields["matches"], "gemini-omni-1.1-flash") || !strings.HasSuffix(it.Link, "/releases/tag/v2.28.0") {
+		t.Errorf("unexpected item %+v", it)
+	}
+	re := regexp.MustCompile(sc.Filter)
+	// Real release lines (as text, from python-genai history).
+	for line, want := range map[string]bool{
+		"Add gemini-3.7-flash (f898b61)":                       true,
+		"Add the Gemini Robotics ER 2 Preview model (61d4645)": true,
+		"Add lyria-3.5, gemini-omni-1.1-flash, and gemini-omni-flash-preview to Interactions Model enum (1e8c0cc)": true,
+		"Add Tool.exa_ai_search for Gemini Enterprise API (a1b2c3d)":                                               false,
+		"Add image_size field for Gemini Developer API Imagen 4 generation (a1b2c3d)":                              false,
+		"Update code samples to gemini-3.8-flash-tts (5673494)":                                                    false,
+		"Add missing fields to the model types (4b855e6)":                                                          false,
+	} {
+		if got := re.MatchString(line); got != want {
+			t.Errorf("%q: match = %v, want %v", line, got, want)
+		}
+	}
+	sc.Filter = ""
+	if n := len(parseFeed(t, sc, "google-releases.atom")); n != 10 {
+		t.Errorf("no filter: got %d items, want 10", n)
+	}
+}
+
 func TestBadXPath(t *testing.T) {
 	if _, err := newWebpage(config.Source{Items: "//["}); err == nil {
 		t.Error("want error")

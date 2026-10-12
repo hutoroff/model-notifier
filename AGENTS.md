@@ -7,7 +7,7 @@ Canonical guide for AI agents (Claude, Codex, Pi, ...) and humans working on thi
 Go daemon that polls AI-provider sources for new LLM releases and posts each new one to Telegram.
 Sources are declared in `config.yaml`: web pages scraped via XPath, GitHub releases Atom feeds.
 Detection is a set diff against a JSON state file; no database, no queue.
-Providers today: Anthropic (models overview page, anthropic-sdk-python releases) and OpenAI (API changelog, openai-python releases).
+Providers today: Anthropic (models overview page, anthropic-sdk-python releases), OpenAI (API changelog, openai-python releases) and Google (Gemini API changelog, python-genai releases).
 
 ## Architecture
 
@@ -101,6 +101,8 @@ must stay within Telegram's HTML subset (`b i u s a code pre blockquote`; no `<b
 
 - OpenAI changelog: class names are build-hashed (`_Badge_10t5o_1`), so XPaths match `data-*` attributes only. Items are gpt-N model tag badges; a model's first badge in document order is its newest mention (the release entry on release day). There are no per-entry anchors, so the docs link is built from the key in the template.
 - openai-python release notes word model additions loosely; the filter matches the `api:` line naming a `gpt-N` id or "model identifier/slug". Known false positive: "gpt-5.6-sol updates"-style lines.
+- Gemini changelog: entries are `h2[@data-text]` (date) + sibling `ul`s; items are `gemini-*` `<code>` ids (`-latest` aliases skipped). The `h2` id is a bare `10-08-2026`, so the anchor link is built in the template. Deprecation lines also name old ids; harmless, they are already in state.
+- Google SDK feed is `googleapis/python-genai`; `google-gemini/generative-ai-python` is archived. The filter matches "Add …" lines naming a `gemini-N` id or a Gemini … model. Known false positive: tokenizer-map lines ("Add gemini-3-pro-preview support for local tokenizer").
 
 ## Analyzing a new source
 
