@@ -217,6 +217,51 @@ func TestGoogleSDK(t *testing.T) {
 	}
 }
 
+func TestXAIAPI(t *testing.T) {
+	items := parseWeb(t, "xai/api", "xai-api.html")
+	want := "grok-4.7,grok-imagine-image-2.0,grok-imagine-video-1.5,grok-imagine-video-1.5-lite,grok-imagine-image-quality,grok-imagine-image,grok-imagine-video"
+	if got := strings.Join(keys(items), ","); got != want {
+		t.Fatalf("keys = %s, want %s", got, want)
+	}
+	if got := items[2].Fields["about"]; got != "Text, Image, Audio → Video" {
+		t.Errorf("about = %q", got)
+	}
+}
+
+func TestXAISDK(t *testing.T) {
+	sc := cfg(t, "xai/python-sdk-releases")
+	items := parseFeed(t, sc, "xai-releases.atom")
+	// fixture has three model-adding releases: v1.18.0 (grok-4.6), v1.16.0 (imagine), v1.15.0 (grok-build-0.1)
+	var titles []string
+	for _, it := range items {
+		titles = append(titles, it.Fields["title"])
+	}
+	if got := strings.Join(titles, ","); got != "v1.18.0,v1.16.0,v1.15.0" {
+		t.Fatalf("titles = %s", got)
+	}
+	if it := items[0]; it.Fields["matches"] != "add grok-4.6 to ChatModel" || !strings.HasSuffix(it.Link, "/releases/tag/v1.18.0") {
+		t.Errorf("unexpected item %+v", it)
+	}
+	re := regexp.MustCompile(sc.Filter)
+	// Real release lines (as text, from xai-sdk-python history).
+	for line, want := range map[string]bool{
+		"Add grok-imagine-image-pro to ImageGenerationModel by @x in https://github.com/xai-org/xai-sdk-python/pull/103":           true,
+		"Update grok-4.20 and multi-agent model variants in ChatModel by @x in https://github.com/xai-org/xai-sdk-python/pull/117": true,
+		"Update README examples to use grok-4.6 by @x in https://github.com/xai-org/xai-sdk-python/pull/191":                       false,
+		"Add agent_count parameter to chat API for multi-agent models by @x in https://github.com/xai-org/xai-sdk-python/pull/104": false,
+		"Use model type aliases in image and video method signatures by @x in https://github.com/xai-org/xai-sdk-python/pull/114":  false,
+		"Add `cost_usd` tracking, model migration, example fixes by @x in https://github.com/xai-org/xai-sdk-python/pull/132":      false,
+	} {
+		if got := re.MatchString(line); got != want {
+			t.Errorf("%q: match = %v, want %v", line, got, want)
+		}
+	}
+	sc.Filter = ""
+	if n := len(parseFeed(t, sc, "xai-releases.atom")); n != 10 {
+		t.Errorf("no filter: got %d items, want 10", n)
+	}
+}
+
 func TestBadXPath(t *testing.T) {
 	if _, err := newWebpage(config.Source{Items: "//["}); err == nil {
 		t.Error("want error")

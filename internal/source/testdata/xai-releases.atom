@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" xml:lang="en-US">
+  <id>tag:github.com,2008:https://github.com/xai-org/xai-sdk-python/releases</id>
+  <link type="text/html" rel="alternate" href="https://github.com/xai-org/xai-sdk-python/releases"/>
+  <link type="application/atom+xml" rel="self" href="https://github.com/xai-org/xai-sdk-python/releases.atom"/>
+  <title>Release notes from xai-sdk-python</title>
+  <updated>2026-09-24T17:55:37Z</updated>
+  <entry>
+    <id>tag:github.com,2008:Repository/999195940/v1.20.0</id>
+    <updated>2026-09-24T18:05:54Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/xai-org/xai-sdk-python/releases/tag/v1.20.0"/>
+    <title>v1.20.0</title>
+    <content type="html">&lt;h2&gt;What&#39;s Changed&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Update changelog by &lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/Omar-V2/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/Omar-V2&quot;&gt;@Omar-V2&lt;/a&gt; in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;5183611203&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/xai-org/xai-sdk-python/issues/199&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/xai-org/xai-sdk-python/pull/199/hovercard&quot; href=&quot;https://github.com/xai-org/xai-sdk-python/pull/199&quot;&gt;#199&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Fetch the correct version from PyPI in the release workflow by &lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/Omar-V2/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/Omar-V2&quot;&gt;@Omar-V2&lt;/a&gt; in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;5184899905&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/xai-org/xai-sdk-python/issues/200&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/xai-org/xai-sdk-python/pull/200/hovercard&quot; href=&quot;https://github.com/xai-org/xai-sdk-python/pull/200&quot;&gt;#200&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Update changelog by &lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/Omar-V2/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/Omar-V2&quot;&gt;@Omar-V2&lt;/a&gt; in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;5185290243&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/xai-org/xai-sdk-python/issues/201&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/xai-org/xai-sdk-python/pull/201/hovercard&quot; href=&quot;https://github.com/xai-org/xai-sdk-python/pull/201&quot;&gt;#201&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Add last frame and keyframes to video generation by &lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/Omar-V2/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/Omar-V2&quot;&gt;@Omar-V2&lt;/a&gt; in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;5569707427&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/xai-org/xai-sdk-python/issues/218&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/xai-org/xai-sdk-python/pull/218/hovercard&quot; href=&quot;https://github.com/xai-org/xai-sdk-python/pull/218&quot;&gt;#218&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Prepare to release v1.20.0 of the xAI Python SDK by &lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/Omar-V2/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/Omar-V2&quot;&gt;@Omar-V2&lt;/a&gt; in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;5572301657&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/xai-org/xai-sdk-python/issues/219&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/xai-org/xai-sdk-python/pull/219/hovercard&quot; href=&quot;https://github.com/xai-org/xai-sdk-python/pull/219&quot;&gt;#219&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Full Changelog&lt;/strong&gt;: &lt;a class=&quot;commit-link&quot; href=&quot;https://github.com/xai-org/xai-sdk-python/compare/v1.19.0...v1.20.0&quot;&gt;&lt;tt&gt;v1.19.0...v1.20.0&lt;/tt&gt;&lt;/a&gt;&lt;/p&gt;</content>
+    <author>
+      <name>github-actions[bot]</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/in/15368?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/999195940/v1.19.0</id>
+    <updated>2026-08-18T18:02:24Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/xai-org/xai-sdk-python/releases/tag/v1.19.0"/>
+    <title>v1.19.0</title>
+    <content type="html">&lt;h2&gt;What&#39;s Changed&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Update README examples to use grok-4.6 by &lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/gyang-xai/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/gyang-xai&quot;&gt;@gyang-xai&lt;/a&gt; in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;5136958134&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/xai-org/xai-sdk-python/issues/191&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/xai-org/xai-sdk-python/pull/191/hovercard&quot; href=&quot;https://github.com/xai-org/xai-sdk-python/pull/191&quot;&gt;#191&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Set &lt;code&gt;tool_call_id&lt;/code&gt; when replaying tool outputs via &lt;code&gt;chat.append(response)&lt;/code&gt; by &lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/Omar-V2/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/Omar-V2&quot;&gt;@Omar-V2&lt;/a&gt; in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;5154954315&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/xai-org/xai-sdk-python/issues/192&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/xai-org/xai-sdk-python/pull/192/hovercard&quot; href=&quot;https://github.com/xai-org/xai-sdk-python/pull/192&quot;&gt;#192&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Add quality parameter to image generation and regen protos from xai-proto by &lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/Omar-V2/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/Omar-V2&quot;&gt;@Omar-V2&lt;/a&gt; in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;5155263917&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/xai-org/xai-sdk-python/issues/193&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/xai-org/xai-sdk-python/pull/193/hovercard&quot; href=&quot;https://github.com/xai-org/xai-sdk-python/pull/193&quot;&gt;#193&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Add &lt;code&gt;reference_audios&lt;/code&gt;, &lt;code&gt;generate_audio&lt;/code&gt;, and 1080p to video generation by &lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/Omar-V2/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/Omar-V2&quot;&gt;@Omar-V2&lt;/a&gt; in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;5156015158&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/xai-org/xai-sdk-python/issues/194&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/xai-org/xai-sdk-python/pull/194/hovercard&quot; href=&quot;https://github.com/xai-org/xai-sdk-python/pull/194&quot;&gt;#194&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Set default gRPC User-Agent to XaiSdk/{version} by &lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/Omar-V2/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/Omar-V2&quot;&gt;@Omar-V2&lt;/a&gt; in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;5156070948&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/xai-org/xai-sdk-python/issues/195&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/xai-org/xai-sdk-python/pull/195/hovercard&quot; href=&quot;https://github.com/xai-org/xai-sdk-python/pull/195&quot;&gt;#195&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Add image_generation server-side tool by &lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/yanxi0830/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/yanxi0830&quot;&gt;@yanxi0830&lt;/a&gt; in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;5003918371&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/xai-org/xai-sdk-python/issues/186&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/xai-org/xai-sdk-python/pull/186/hovercard&quot; href=&quot;https://github.com/xai-org/xai-sdk-python/pull/186&quot;&gt;#186&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Prepare to release v1.19.0 of the xAI Python SDK by &lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/Omar-V2/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/Omar-V2&quot;&gt;@Omar-V2&lt;/a&gt; in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;5183470776&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/xai-org/xai-sdk-python/issues/198&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/xai-org/xai-sdk-python/pull/198/hovercard&quot; href=&quot;https://github.com/xai-org/xai-sdk-python/pull/198&quot;&gt;#198&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;New Contributors&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/yanxi0830/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/yanxi0830&quot;&gt;@yanxi0830&lt;/a&gt; made their first contribution in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;5003918371&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/xai-org/xai-sdk-python/issues/186&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/xai-org/xai-sdk-python/pull/186/hovercard&quot; href=&quot;https://github.com/xai-org/xai-sdk-python/pull/186&quot;&gt;#186&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Full Changelog&lt;/strong&gt;: &lt;a class=&quot;commit-link&quot; href=&quot;https://github.com/xai-org/xai-sdk-python/compare/v1.18.0...v1.19.0&quot;&gt;&lt;tt&gt;v1.18.0...v1.19.0&lt;/tt&gt;&lt;/a&gt;&lt;/p&gt;</content>
+    <author>
+      <name>github-actions[bot]</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/in/15368?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/999195940/v1.18.0</id>
+    <updated>2026-08-13T01:27:00Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/xai-org/xai-sdk-python/releases/tag/v1.18.0"/>
+    <title>v1.18.0</title>
+    <content type="html">&lt;h2&gt;What&#39;s Changed&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Accept xhigh reasoning_effort and add grok-4.6 to ChatModel by &lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/gyang-xai/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/gyang-xai&quot;&gt;@gyang-xai&lt;/a&gt; in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;5135341372&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/xai-org/xai-sdk-python/issues/189&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/xai-org/xai-sdk-python/pull/189/hovercard&quot; href=&quot;https://github.com/xai-org/xai-sdk-python/pull/189&quot;&gt;#189&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;chore: bump version to 1.18.0 by &lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/gyang-xai/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/gyang-xai&quot;&gt;@gyang-xai&lt;/a&gt; in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;5136673059&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/xai-org/xai-sdk-python/issues/190&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/xai-org/xai-sdk-python/pull/190/hovercard&quot; href=&quot;https://github.com/xai-org/xai-sdk-python/pull/190&quot;&gt;#190&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Full Changelog&lt;/strong&gt;: &lt;a class=&quot;commit-link&quot; href=&quot;https://github.com/xai-org/xai-sdk-python/compare/v1.17.1...v1.18.0&quot;&gt;&lt;tt&gt;v1.17.1...v1.18.0&lt;/tt&gt;&lt;/a&gt;&lt;/p&gt;</content>
+    <author>
+      <name>github-actions[bot]</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/in/15368?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/999195940/v1.17.1</id>
+    <updated>2026-07-14T17:02:47Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/xai-org/xai-sdk-python/releases/tag/v1.17.1"/>
+    <title>v1.17.1</title>
+    <content type="html">&lt;p&gt;Release version 1.17.1 of the xAI Python SDK&lt;/p&gt;</content>
+    <author>
+      <name>actions-user</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/65916846?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/999195940/v1.17.0</id>
+    <updated>2026-06-12T03:44:39Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/xai-org/xai-sdk-python/releases/tag/v1.17.0"/>
+    <title>v1.17.0</title>
+    <content type="html">&lt;h2&gt;What&#39;s Changed&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;feat: add service_tier support for priority processing by &lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/double-di/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/double-di&quot;&gt;@double-di&lt;/a&gt; in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;4627544553&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/xai-org/xai-sdk-python/issues/163&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/xai-org/xai-sdk-python/pull/163/hovercard&quot; href=&quot;https://github.com/xai-org/xai-sdk-python/pull/163&quot;&gt;#163&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;chore: bump version to 1.17.0 by &lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/double-di/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/double-di&quot;&gt;@double-di&lt;/a&gt; in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;4645491342&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/xai-org/xai-sdk-python/issues/165&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/xai-org/xai-sdk-python/pull/165/hovercard&quot; href=&quot;https://github.com/xai-org/xai-sdk-python/pull/165&quot;&gt;#165&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Full Changelog&lt;/strong&gt;: &lt;a class=&quot;commit-link&quot; href=&quot;https://github.com/xai-org/xai-sdk-python/compare/v1.16.0...v1.17.0&quot;&gt;&lt;tt&gt;v1.16.0...v1.17.0&lt;/tt&gt;&lt;/a&gt;&lt;/p&gt;</content>
+    <author>
+      <name>github-actions[bot]</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/in/15368?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/999195940/v1.16.0</id>
+    <updated>2026-06-10T17:41:54Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/xai-org/xai-sdk-python/releases/tag/v1.16.0"/>
+    <title>v1.16.0</title>
+    <content type="html">&lt;h2&gt;What&#39;s Changed&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Add Imagine file storage &amp;amp; file-ID inputs to image/video generation by &lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/Omar-V2/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/Omar-V2&quot;&gt;@Omar-V2&lt;/a&gt; in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;4613810851&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/xai-org/xai-sdk-python/issues/160&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/xai-org/xai-sdk-python/pull/160/hovercard&quot; href=&quot;https://github.com/xai-org/xai-sdk-python/pull/160&quot;&gt;#160&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Add public file URLs and list filtering to the files client by &lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/Omar-V2/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/Omar-V2&quot;&gt;@Omar-V2&lt;/a&gt; in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;4617417828&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/xai-org/xai-sdk-python/issues/161&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/xai-org/xai-sdk-python/pull/161/hovercard&quot; href=&quot;https://github.com/xai-org/xai-sdk-python/pull/161&quot;&gt;#161&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Add new grok imagine models to types/model.py for editor autocomplete by &lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/Omar-V2/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/Omar-V2&quot;&gt;@Omar-V2&lt;/a&gt; in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;4621677331&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/xai-org/xai-sdk-python/issues/162&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/xai-org/xai-sdk-python/pull/162/hovercard&quot; href=&quot;https://github.com/xai-org/xai-sdk-python/pull/162&quot;&gt;#162&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Prepare to release v1.16.0 of the xAI Python SDK by &lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/Omar-V2/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/Omar-V2&quot;&gt;@Omar-V2&lt;/a&gt; in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;4632785219&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/xai-org/xai-sdk-python/issues/164&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/xai-org/xai-sdk-python/pull/164/hovercard&quot; href=&quot;https://github.com/xai-org/xai-sdk-python/pull/164&quot;&gt;#164&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Full Changelog&lt;/strong&gt;: &lt;a class=&quot;commit-link&quot; href=&quot;https://github.com/xai-org/xai-sdk-python/compare/v1.15.0...v1.16.0&quot;&gt;&lt;tt&gt;v1.15.0...v1.16.0&lt;/tt&gt;&lt;/a&gt;&lt;/p&gt;</content>
+    <author>
+      <name>github-actions[bot]</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/in/15368?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/999195940/v1.15.0</id>
+    <updated>2026-05-30T01:42:34Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/xai-org/xai-sdk-python/releases/tag/v1.15.0"/>
+    <title>v1.15.0</title>
+    <content type="html">&lt;h2&gt;What&#39;s Changed&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Add grok-build-0.1 to ChatModel by &lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/shawnthapa/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/shawnthapa&quot;&gt;@shawnthapa&lt;/a&gt; in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;4552217609&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/xai-org/xai-sdk-python/issues/155&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/xai-org/xai-sdk-python/pull/155/hovercard&quot; href=&quot;https://github.com/xai-org/xai-sdk-python/pull/155&quot;&gt;#155&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Add context compaction support by &lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/shawnthapa/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/shawnthapa&quot;&gt;@shawnthapa&lt;/a&gt; in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;4552713606&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/xai-org/xai-sdk-python/issues/156&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/xai-org/xai-sdk-python/pull/156/hovercard&quot; href=&quot;https://github.com/xai-org/xai-sdk-python/pull/156&quot;&gt;#156&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Bump version from 1.14.0 to 1.15.0 by &lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/shawnthapa/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/shawnthapa&quot;&gt;@shawnthapa&lt;/a&gt; in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;4552735603&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/xai-org/xai-sdk-python/issues/157&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/xai-org/xai-sdk-python/pull/157/hovercard&quot; href=&quot;https://github.com/xai-org/xai-sdk-python/pull/157&quot;&gt;#157&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Full Changelog&lt;/strong&gt;: &lt;a class=&quot;commit-link&quot; href=&quot;https://github.com/xai-org/xai-sdk-python/compare/v1.14.0...v1.15.0&quot;&gt;&lt;tt&gt;v1.14.0...v1.15.0&lt;/tt&gt;&lt;/a&gt;&lt;/p&gt;</content>
+    <author>
+      <name>github-actions[bot]</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/in/15368?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/999195940/v1.14.0</id>
+    <updated>2026-05-27T05:15:34Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/xai-org/xai-sdk-python/releases/tag/v1.14.0"/>
+    <title>v1.14.0</title>
+    <content type="html">&lt;h2&gt;What&#39;s Changed&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Add enable_image_search to web_search and SERVER_SIDE_TOOL_IMAGE_SEARCH enum by &lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/ushiromiya-lion/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/ushiromiya-lion&quot;&gt;@ushiromiya-lion&lt;/a&gt; in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;4529293030&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/xai-org/xai-sdk-python/issues/152&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/xai-org/xai-sdk-python/pull/152/hovercard&quot; href=&quot;https://github.com/xai-org/xai-sdk-python/pull/152&quot;&gt;#152&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Bump version to 1.14.0 by &lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/ushiromiya-lion/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/ushiromiya-lion&quot;&gt;@ushiromiya-lion&lt;/a&gt; in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;4529590413&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/xai-org/xai-sdk-python/issues/153&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/xai-org/xai-sdk-python/pull/153/hovercard&quot; href=&quot;https://github.com/xai-org/xai-sdk-python/pull/153&quot;&gt;#153&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;New Contributors&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/ushiromiya-lion/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/ushiromiya-lion&quot;&gt;@ushiromiya-lion&lt;/a&gt; made their first contribution in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;4529293030&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/xai-org/xai-sdk-python/issues/152&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/xai-org/xai-sdk-python/pull/152/hovercard&quot; href=&quot;https://github.com/xai-org/xai-sdk-python/pull/152&quot;&gt;#152&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Full Changelog&lt;/strong&gt;: &lt;a class=&quot;commit-link&quot; href=&quot;https://github.com/xai-org/xai-sdk-python/compare/v1.13.0...v1.14.0&quot;&gt;&lt;tt&gt;v1.13.0...v1.14.0&lt;/tt&gt;&lt;/a&gt;&lt;/p&gt;</content>
+    <author>
+      <name>github-actions[bot]</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/in/15368?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/999195940/v1.13.0</id>
+    <updated>2026-05-16T18:00:46Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/xai-org/xai-sdk-python/releases/tag/v1.13.0"/>
+    <title>v1.13.0</title>
+    <content type="html">&lt;h2&gt;What&#39;s Changed&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;feat: add prepare_extension() for batch video extension by &lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/double-di/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/double-di&quot;&gt;@double-di&lt;/a&gt; in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;4404886329&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/xai-org/xai-sdk-python/issues/141&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/xai-org/xai-sdk-python/pull/141/hovercard&quot; href=&quot;https://github.com/xai-org/xai-sdk-python/pull/141&quot;&gt;#141&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Full Changelog&lt;/strong&gt;: &lt;a class=&quot;commit-link&quot; href=&quot;https://github.com/xai-org/xai-sdk-python/compare/v1.12.2...v1.13.0&quot;&gt;&lt;tt&gt;v1.12.2...v1.13.0&lt;/tt&gt;&lt;/a&gt;&lt;/p&gt;</content>
+    <author>
+      <name>double-di</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/69895549?s=60&amp;v=4"/>
+  </entry>
+  <entry>
+    <id>tag:github.com,2008:Repository/999195940/v1.12.2</id>
+    <updated>2026-05-07T00:07:20Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/xai-org/xai-sdk-python/releases/tag/v1.12.2"/>
+    <title>v1.12.2</title>
+    <content type="html">&lt;h2&gt;What&#39;s Changed&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Add none and medium reasoning effort levels by &lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/shawnthapa/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/shawnthapa&quot;&gt;@shawnthapa&lt;/a&gt; in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;4395163207&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/xai-org/xai-sdk-python/issues/139&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/xai-org/xai-sdk-python/pull/139/hovercard&quot; href=&quot;https://github.com/xai-org/xai-sdk-python/pull/139&quot;&gt;#139&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Bump version from 1.12.1 to 1.12.2 by &lt;a class=&quot;user-mention notranslate&quot; data-hovercard-type=&quot;user&quot; data-hovercard-url=&quot;/users/shawnthapa/hovercard&quot; data-octo-click=&quot;hovercard-link-click&quot; data-octo-dimensions=&quot;link_type:self&quot; href=&quot;https://github.com/shawnthapa&quot;&gt;@shawnthapa&lt;/a&gt; in &lt;a class=&quot;issue-link js-issue-link&quot; data-error-text=&quot;Failed to load title&quot; data-id=&quot;4395191216&quot; data-permission-text=&quot;Title is private&quot; data-url=&quot;https://github.com/xai-org/xai-sdk-python/issues/140&quot; data-hovercard-type=&quot;pull_request&quot; data-hovercard-url=&quot;/xai-org/xai-sdk-python/pull/140/hovercard&quot; href=&quot;https://github.com/xai-org/xai-sdk-python/pull/140&quot;&gt;#140&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Full Changelog&lt;/strong&gt;: &lt;a class=&quot;commit-link&quot; href=&quot;https://github.com/xai-org/xai-sdk-python/compare/v1.12.1...v1.12.2&quot;&gt;&lt;tt&gt;v1.12.1...v1.12.2&lt;/tt&gt;&lt;/a&gt;&lt;/p&gt;</content>
+    <author>
+      <name>github-actions[bot]</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/in/15368?s=60&amp;v=4"/>
+  </entry>
+</feed>

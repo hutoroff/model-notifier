@@ -39,3 +39,5 @@ fixtures: ## refresh test snapshots from live sources
 	curl -fsSL -o internal/source/testdata/openai-releases.atom https://github.com/openai/openai-python/releases.atom
 	curl -fsSL -o internal/source/testdata/google-changelog.html https://ai.google.dev/gemini-api/docs/changelog
 	curl -fsSL -o internal/source/testdata/google-releases.atom https://github.com/googleapis/python-genai/releases.atom
+	curl -fsSL -o internal/source/testdata/xai-api.html https://x.ai/api
+	curl -fsSL -o internal/source/testdata/xai-releases.atom https://github.com/xai-org/xai-sdk-python/releases.atom
