@@ -31,3 +31,25 @@ providers:
         template: |
           📦 <b>anthropic-sdk-python {{.Fields.title}}</b> adds: <code>{{.Fields.matches}}</code>
           <a href="{{.Link}}">Release notes</a>
+
+  - name: openai
+    sources:
+      - name: changelog
+        type: webpage
+        url: https://developers.openai.com/api/docs/changelog
+        interval: 1h
+        # Model tag badges whose text is gpt-<digit>… (text models only). Class names are build-hashed, so match data-* attributes.
+        items: "//main//div[@data-variant='soft'][@data-color='secondary'][starts-with(normalize-space(.),'gpt-')][contains('0123456789',substring(normalize-space(.),5,1))]"
+        fields:
+          date: "./ancestor::div[contains(@class,'grid')][1]//div[@data-variant='outline']"   # entry date badge, e.g. "Oct 8"
+        template: |
+          🆕 <b>OpenAI</b> changelog lists a new model: <code>{{.Key}}</code> ({{.Fields.date}})
+          <a href="https://developers.openai.com/api/docs/models/{{.Key}}">Docs</a> · <a href="https://developers.openai.com/api/docs/changelog">Changelog</a>
+      - name: python-sdk-releases
+        type: github_releases
+        url: https://github.com/openai/openai-python/releases.atom
+        # The "api: …" release line that names a gpt-N model or adds model identifiers/slugs.
+        filter: '(?i)api: [^()]*?\b(?:gpt-\d[\w.-]*|model (?:identifier|slug)s?)\b[^()]*'
+        template: |
+          📦 <b>openai-python {{.Fields.title}}</b>: {{.Fields.matches}}
+          <a href="{{.Link}}">Release notes</a>

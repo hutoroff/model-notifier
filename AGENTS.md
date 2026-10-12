@@ -7,6 +7,7 @@ Canonical guide for AI agents (Claude, Codex, Pi, ...) and humans working on thi
 Go daemon that polls AI-provider sources for new LLM releases and posts each new one to Telegram.
 Sources are declared in `config.yaml`: web pages scraped via XPath, GitHub releases Atom feeds.
 Detection is a set diff against a JSON state file; no database, no queue.
+Providers today: Anthropic (models overview page, anthropic-sdk-python releases) and OpenAI (API changelog, openai-python releases).
 
 ## Architecture
 
@@ -28,11 +29,12 @@ Detection is a set diff against a JSON state file; no database, no queue.
 | `internal/source/source.go` | `Item`, `Source` interface, `New` switch, shared HTTP `get` |
 | `internal/source/webpage.go` | XPath scraper |
 | `internal/source/github.go` | GitHub releases Atom feed + regex filter |
-| `internal/source/testdata/` | offline fixtures (`make fixtures` refreshes) |
+| `internal/source/testdata/` | offline fixtures `<provider>-<source>.<ext>` (`make fixtures` refreshes) |
+| `internal/source/source_test.go` | fixture tests; they load source rules from the real `config.yaml` |
 | `internal/notify/` | `Notifier` interface, `New` switch, Telegram impl |
 | `internal/state/state.go` | seen-items map, atomic Load/Save |
 | `internal/monitor/monitor.go` | per-source loop, `Check`, `RunAll` |
-| `config.yaml` | default config (Anthropic) |
+| `config.yaml` | default config (Anthropic, OpenAI) |
 | `Dockerfile`, `docker-compose.yml`, `.env.example` | deployment |
 
 ## Commands
@@ -65,7 +67,7 @@ Top level: `interval` (default `30m`), `state_file` (default `state.json`), `lis
 | `type` | all | `webpage` or `github_releases` |
 | `interval` | all | per-source override of global interval |
 | `items` | webpage | XPath; one item per matched node, `Key` = normalized text of the node |
-| `fields` | webpage | name → XPath. Starting with `.` → relative to the item node. Otherwise document-wide, zipped with items by index. Field `link` becomes `Item.Link`, resolved to absolute against `url` |
+| `fields` | webpage | name → XPath. Starting with `.` → relative to the item node. Otherwise document-wide, zipped with items by index. Field `link` becomes `Item.Link`, resolved to absolute against `url`. Items with a duplicate `Key` are dropped (first match wins) |
 | `filter` | github_releases | regex over title+content; empty → every release. Fields: `title`, `content`, `updated`, `matches` |
 
 `template` is Go `html/template`. Data: `.Key`, `.Link`, `.Fields.<name>`. Values are escaped; the output
@@ -82,6 +84,7 @@ must stay within Telegram's HTML subset (`b i u s a code pre blockquote`; no `<b
 
 - Stdlib first. No new dependency without stating why in the PR. Current deps: `antchfx/htmlquery`, `antchfx/xpath`, `gopkg.in/yaml.v3`.
 - Every parser has an offline fixture test. Tests never hit the network.
+- Source tests read XPaths/filters from `config.yaml` via `cfg(t, "provider/source")`; changing a rule there is tested automatically. Adding a source = add a fixture + a `Test<Provider><Source>`.
 - `gofmt`-clean; `log/slog` for logs; errors logged, never fatal in the loop.
 - `ponytail:` comments mark known deliberate shortcuts and their upgrade path.
 - Never log tokens or full Telegram API URLs (they contain the bot token).
@@ -95,6 +98,16 @@ must stay within Telegram's HTML subset (`b i u s a code pre blockquote`; no `<b
 - Telegram HTML mode rejects unknown tags and unescaped `<`, `>`, `&`; keep authored tags in the template, let `html/template` escape data.
 - Live smoke test: `make once ARGS=-notify-on-seed` with real `TG_BOT_TOKEN`/`TG_CHAT_ID` exported, then `rm state.json`.
 - `config.yaml` points `state_file` at `/data/state.json` (container); `make run`/`make once` rewrite it to `./state.json` in `bin/config.local.yaml`.
+
+- OpenAI changelog: class names are build-hashed (`_Badge_10t5o_1`), so XPaths match `data-*` attributes only. Items are gpt-N model tag badges; a model's first badge in document order is its newest mention (the release entry on release day). There are no per-entry anchors, so the docs link is built from the key in the template.
+- openai-python release notes word model additions loosely; the filter matches the `api:` line naming a `gpt-N` id or "model identifier/slug". Known false positive: "gpt-5.6-sol updates"-style lines.
+
+## Analyzing a new source
+
+1. Download into a fresh temp dir: `curl -sL -o /tmp/x/page.html <url>`. Confirm the content is server-rendered (grep for a known model id); if only in JS/JSON, XPath won't see it.
+2. Try XPaths without writing Go: `xmllint --html --xpath "count(<xpath>)" page.html 2>/dev/null`. Prefer `data-*`/semantic attributes over generated class names.
+3. For GitHub feeds the Atom has only 10 entries; tune `filter` on history: `gh api 'repos/<o>/<r>/releases?per_page=100'` and test the regex over `.body`.
+4. Save fixtures as `testdata/<provider>-<source>.*`, add the curl to `make fixtures`, add the source to `config.yaml`, write the test.
 
 ## Before you say done
 

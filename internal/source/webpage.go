@@ -76,7 +76,16 @@ func (w *webpage) parse(body []byte) ([]Item, error) {
 			}
 		}
 	}
-	return items, nil
+	// Keep the first item per key; done after fields so index-zipped fields stay aligned.
+	seen := map[string]bool{}
+	out := items[:0]
+	for _, it := range items {
+		if !seen[it.Key] {
+			seen[it.Key] = true
+			out = append(out, it)
+		}
+	}
+	return out, nil
 }
 
 func (w *webpage) resolve(ref string) string {

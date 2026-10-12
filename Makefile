@@ -33,5 +33,7 @@ up: ## docker compose up
 	docker compose up -d --build
 
 fixtures: ## refresh test snapshots from live sources
-	curl -fsSL -o internal/source/testdata/models-overview.html https://platform.claude.com/docs/en/models/overview
-	curl -fsSL -o internal/source/testdata/releases.atom https://github.com/anthropics/anthropic-sdk-python/releases.atom
+	curl -fsSL -o internal/source/testdata/anthropic-models-overview.html https://platform.claude.com/docs/en/models/overview
+	curl -fsSL -o internal/source/testdata/anthropic-releases.atom https://github.com/anthropics/anthropic-sdk-python/releases.atom
+	curl -fsSL -o internal/source/testdata/openai-changelog.html https://developers.openai.com/api/docs/changelog
+	curl -fsSL -o internal/source/testdata/openai-releases.atom https://github.com/openai/openai-python/releases.atom
