@@ -19,10 +19,10 @@ type Config struct {
 }
 
 type Notifier struct {
-	Name   string `yaml:"name"`
-	Type   string `yaml:"type"` // "telegram"
-	Token  string `yaml:"token"`
-	ChatID string `yaml:"chat_id"`
+	Name   string `yaml:"name"`    // unique; keys per-notifier delivery state
+	Type   string `yaml:"type"`    // "telegram" | "slack"
+	Token  string `yaml:"token"`   // telegram bot token | slack bot token (xoxb-…)
+	ChatID string `yaml:"chat_id"` // telegram chat | slack channel id (C…)
 }
 
 type Provider struct {
@@ -36,11 +36,13 @@ type Source struct {
 	Type     string        `yaml:"type"` // "webpage" | "github_releases"
 	URL      string        `yaml:"url"`
 	Interval time.Duration `yaml:"interval"` // 0 → Config.Interval
-	Template string        `yaml:"template"` // html/template, data = source.Item
+	Template string        `yaml:"template"` // html/template, data = source.Item ([]source.Item when Value is set)
 
 	// webpage
 	Items  string            `yaml:"items"`  // XPath; one Item per matched node, Key = normalize-space(node)
 	Fields map[string]string `yaml:"fields"` // name → XPath; "./…" relative to item, else document-wide zipped by index; "link" → Item.Link
+	Key    string            `yaml:"key"`    // XPath relative to item; overrides Key. Node-sets are joined with " · "
+	Value  string            `yaml:"value"`  // XPath relative to item; set → report changes of Value per Key, one digest per check
 
 	// github_releases
 	Filter string `yaml:"filter"` // regexp over title+content; empty → every entry
@@ -75,8 +77,13 @@ func (c *Config) validate() error {
 	if len(c.Notifiers) == 0 {
 		return fmt.Errorf("no notifiers configured")
 	}
+	names := map[string]bool{}
 	for _, n := range c.Notifiers {
-		if n.Type != "telegram" {
+		if n.Name == "" || names[n.Name] {
+			return fmt.Errorf("notifier %q: name must be set and unique", n.Name)
+		}
+		names[n.Name] = true
+		if n.Type != "telegram" && n.Type != "slack" {
 			return fmt.Errorf("notifier %q: unknown type %q", n.Name, n.Type)
 		}
 		if n.Token == "" || n.ChatID == "" {
@@ -94,6 +101,9 @@ func (c *Config) validate() error {
 					return fmt.Errorf("source %s/%s: items xpath required", p.Name, s.Name)
 				}
 			case "github_releases":
+				if s.Key != "" || s.Value != "" {
+					return fmt.Errorf("source %s/%s: key/value apply to webpage only", p.Name, s.Name)
+				}
 			default:
 				return fmt.Errorf("source %s/%s: unknown type %q", p.Name, s.Name, s.Type)
 			}

@@ -24,3 +24,28 @@ func TestSaveLoad(t *testing.T) {
 		t.Fatal("round-trip mismatch")
 	}
 }
+
+func TestDelete(t *testing.T) {
+	s, _ := Load(filepath.Join(t.TempDir(), "state.json"))
+	s.Add("a", "k1")
+	s.Add("a", "k2")
+	s.Delete("a", "k1")
+	if s.Seen("a", "k1") || !s.Seen("a", "k2") {
+		t.Fatal("delete k1")
+	}
+	s.Delete("a", "k2")
+	if s.Has("a") {
+		t.Fatal("empty source kept")
+	}
+}
+
+func TestFind(t *testing.T) {
+	s, _ := Load(filepath.Join(t.TempDir(), "s.json"))
+	s.Add("src", "k\tv1")
+	if v, ok := s.Find("src", "k\t"); !ok || v != "v1" {
+		t.Fatalf("Find = %q, %v", v, ok)
+	}
+	if _, ok := s.Find("src", "x\t"); ok {
+		t.Fatal("found missing prefix")
+	}
+}

@@ -4,10 +4,10 @@ Canonical guide for AI agents (Claude, Codex, Pi, ...) and humans working on thi
 
 ## Purpose
 
-Go daemon that polls AI-provider sources for new LLM releases and posts each new one to Telegram.
+Go daemon that polls AI-provider sources for new LLM releases and price changes and posts them to Telegram and/or Slack.
 Sources are declared in `config.yaml`: web pages scraped via XPath, GitHub releases Atom feeds.
-Detection is a set diff against a JSON state file; no database, no queue.
-Providers today: Anthropic (models overview page, anthropic-sdk-python releases), OpenAI (API changelog, openai-python releases), Google (Gemini API changelog, python-genai releases) and xAI (x.ai/api pricing tables, xai-sdk-python releases).
+Detection is a set diff against a JSON state file; no database, no queue. Pricing sources track a value per key and report changes (old → new) as one digest per check.
+Providers today: Anthropic (models overview page, anthropic-sdk-python releases), OpenAI (API changelog, openai-python releases), Google (Gemini API changelog, python-genai releases) and xAI (x.ai/api pricing tables, xai-sdk-python releases); each also has a `pricing` source on its pricing page.
 
 ## Architecture
 
@@ -17,7 +17,7 @@ Providers today: Anthropic (models overview page, anthropic-sdk-python releases)
  source.Fetch ──[]Item──▶ monitor.Check ──diff──▶ state (JSON file)
  (webpage, github)        │  new items only
                           ▼
-                 html/template render ──▶ notify.Send (telegram)
+                 html/template render ──▶ notify.Send (telegram, slack)
 ```
 
 ## Layout
@@ -31,7 +31,7 @@ Providers today: Anthropic (models overview page, anthropic-sdk-python releases)
 | `internal/source/github.go` | GitHub releases Atom feed + regex filter |
 | `internal/source/testdata/` | offline fixtures `<provider>-<source>.<ext>` (`make fixtures` refreshes) |
 | `internal/source/source_test.go` | fixture tests; they load source rules from the real `config.yaml` |
-| `internal/notify/` | `Notifier` interface, `New` switch, Telegram impl |
+| `internal/notify/` | `Notifier` interface, `New` switch, Telegram and Slack (`chat.postMessage`, HTML→mrkdwn) impls |
 | `internal/state/state.go` | seen-items map, atomic Load/Save |
 | `internal/monitor/monitor.go` | per-source loop, `Check`, `RunAll` |
 | `config.yaml` | default config (Anthropic, OpenAI, Google, xAI) |
@@ -55,9 +55,10 @@ Binary flags: `-config` (default `config.yaml`), `-once`, `-notify-on-seed`, `-h
 ## Config reference
 
 Top level: `interval` (default `30m`), `state_file` (default `state.json`), `listen` (default `:8080`),
-`notifiers[]`, `providers[]`. `${VAR}` anywhere is expanded from the environment (`TG_BOT_TOKEN`, `TG_CHAT_ID`).
+`notifiers[]`, `providers[]`. `${VAR}` anywhere is expanded from the environment (`TG_BOT_TOKEN`, `TG_CHAT_ID`, `SLACK_BOT_TOKEN`, `SLACK_CHANNEL_ID`).
 
-`notifiers[]`: `name`, `type` (`telegram`), `token`, `chat_id`. Every notifier receives every message.
+`notifiers[]`: `name` (unique), `type` (`telegram` | `slack`), `token`, `chat_id`. Every notifier receives every message.
+Slack: `token` is a bot token (`xoxb-…`, scope `chat:write`, app invited to the channel), `chat_id` is the channel id (`C…`).
 
 `providers[]`: `name`, `sources[]`. Each source:
 
@@ -67,14 +68,19 @@ Top level: `interval` (default `30m`), `state_file` (default `state.json`), `lis
 | `type` | all | `webpage` or `github_releases` |
 | `interval` | all | per-source override of global interval |
 | `items` | webpage | XPath; one item per matched node, `Key` = normalized text of the node |
+| `key` | webpage | XPath relative to the item; overrides `Key`. Node-set → non-empty node texts joined with ` · ` (union = document order); string results (`concat()`) as is |
+| `value` | webpage | XPath relative to the item, evaluated like `key`. Set → change tracker: state key is `<Key>\t<Value>`; a changed value is reported with `.Old`/`.Value`, a new `Key` is recorded silently. All changes of one check go in one message (split at 4000 bytes); template data is `[]Item`, use `{{range .}}` |
 | `fields` | webpage | name → XPath. Starting with `.` → relative to the item node. Otherwise document-wide, zipped with items by index. Field `link` becomes `Item.Link`, resolved to absolute against `url`. Items with a duplicate `Key` are dropped (first match wins) |
 | `filter` | github_releases | regex over title+content; empty → every release. Fields: `title`, `content`, `updated`, `matches` |
 
 `template` is Go `html/template`. Data: `.Key`, `.Link`, `.Fields.<name>`. Values are escaped; the output
 must stay within Telegram's HTML subset (`b i u s a code pre blockquote`; no `<br>`, use newlines).
+The Slack notifier converts that subset to mrkdwn (`u`/`blockquote` are dropped), so one template serves both.
 
 ## How to add
 
+- **A pricing source**: config only. A `webpage` source with `items` = one node per priced row, `key` = row identity
+  (section · tier · model · row label, never a price), `value` = price cells only (never descriptions, or copy edits look like price changes).
 - **A provider**: config only. Add an entry under `providers:` with its sources.
 - **A source type**: implement `source.Source` in `internal/source/<type>.go`, add a case in `source.New`
   and in `config.validate`, add a fixture under `testdata/` and an offline test.
@@ -87,14 +93,14 @@ must stay within Telegram's HTML subset (`b i u s a code pre blockquote`; no `<b
 - Source tests read XPaths/filters from `config.yaml` via `cfg(t, "provider/source")`; changing a rule there is tested automatically. Adding a source = add a fixture + a `Test<Provider><Source>`.
 - `gofmt`-clean; `log/slog` for logs; errors logged, never fatal in the loop.
 - `ponytail:` comments mark known deliberate shortcuts and their upgrade path.
-- Never log tokens or full Telegram API URLs (they contain the bot token).
+- Never log tokens or full Telegram API URLs (they contain the bot token). The Slack token goes in the `Authorization` header only.
 
 ## Gotchas
 
 - Only `${VAR}` is expanded; a bare `$` (e.g. a regex anchor) stays literal. An unset variable expands to empty and fails validation for notifier fields.
 - Set diff ignores removals: items disappearing from a source are not reported and stay in state.
 - First run for a source seeds state silently (no messages) unless `-notify-on-seed`.
-- A failed send is not recorded, so the item is retried next tick.
+- A failed send is retried next tick, for the failed notifier only: partial deliveries live in state under `<provider>/<source>@<notifier>` and are removed once every notifier has the item. Renaming a notifier while a delivery is pending re-sends it to that notifier.
 - 429/503 (or 403 + `Retry-After`) pauses that source until `Retry-After` (capped at 24h); `POST /run` obeys the pause. Without the header the next tick just retries.
 - Telegram HTML mode rejects unknown tags and unescaped `<`, `>`, `&`; keep authored tags in the template, let `html/template` escape data.
 - Live smoke test: `make once ARGS=-notify-on-seed` with real `TG_BOT_TOKEN`/`TG_CHAT_ID` exported, then `rm state.json`.
@@ -106,6 +112,15 @@ must stay within Telegram's HTML subset (`b i u s a code pre blockquote`; no `<b
 - Google SDK feed is `googleapis/python-genai`; `google-gemini/generative-ai-python` is archived. The filter matches "Add …" lines naming a `gemini-N` id or a Gemini … model. Known false positive: tokenizer-map lines ("Add gemini-3-pro-preview support for local tokenizer").
 - x.ai/api shows only the current flagship text model plus Imagine models (older grok-4.x live in news/JS only); the voice table lists modes, not ids. Ids are matched inside `<table>` only, since mobile cards duplicate them. No per-model anchors, so links point at `#models` and the docs pricing page.
 - xai-sdk-python lines are "<text> by @user in <PR url>"; the filter matches "Add/Update … to/in <X>Model" (new ids land in the `ChatModel`/`ImageGenerationModel` types), bounded by `[^@]` so it can't run into the next line.
+- antchfx/xpath quirks (xmllint won't show them; test in Go): `preceding::h3[1]` returns several nodes, use
+  `preceding::*[self::h3][1]`; `(a | b)[last()]` returns nothing, write disjoint branches (`self::tr[cond]/… | self::tr[not(cond)]/…`).
+  xmllint/libxml2 also parses some pages differently (Google: 294 rows vs Go's 291, drops `<= 200k`), so final counts come from the Go test.
+- `text()` treats `<br>` as a space; other inline/block boundaries are not separated (`$0.01 / sec$0.002 / img`).
+- Pricing sources: OpenAI's `openai.com/api/pricing/` redirects to ChatGPT Business seats, so the source is the developers docs page.
+  That page server-renders only the newest 2-4 rows per table; legacy-model prices live in `astro-island` JSON props and are not tracked.
+  Google: paid-tier column only. xAI: `docs.x.ai/developers/pricing` (all models, cached/long context, tools), not x.ai/api.
+  Anthropic headings end in an icon glyph, so the key takes the heading's first text node.
+- A pricing row that disappears is not reported (removals are ignored); a price going to "Not available" on Google is a change, since those rows are kept.
 
 ## Analyzing a new source
 

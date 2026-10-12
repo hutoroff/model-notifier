@@ -20,16 +20,22 @@ import (
 type Entry struct {
 	ID       string // provider/source
 	Src      source.Source
-	Tmpl     *template.Template // data = source.Item
+	Tmpl     *template.Template // data = source.Item, or []source.Item when Digest
 	Interval time.Duration
+	Digest   bool // report Value changes per Key, all of one check in one message
 
 	mu          sync.Mutex // serializes ticker and /run checks
 	pausedUntil time.Time  // set from a source's Retry-After; guarded by mu
 }
 
+type namedNotifier struct {
+	name string
+	notify.Notifier
+}
+
 type Monitor struct {
 	sources      []*Entry
-	notifiers    []notify.Notifier
+	notifiers    []namedNotifier
 	state        *state.State
 	NotifyOnSeed bool
 }
@@ -51,7 +57,7 @@ func New(cfg *config.Config, st *state.State, notifyOnSeed bool) (*Monitor, erro
 			if iv == 0 {
 				iv = cfg.Interval
 			}
-			m.sources = append(m.sources, &Entry{ID: id, Src: src, Tmpl: tmpl, Interval: iv})
+			m.sources = append(m.sources, &Entry{ID: id, Src: src, Tmpl: tmpl, Interval: iv, Digest: sc.Value != ""})
 		}
 	}
 	for _, nc := range cfg.Notifiers {
@@ -59,12 +65,24 @@ func New(cfg *config.Config, st *state.State, notifyOnSeed bool) (*Monitor, erro
 		if err != nil {
 			return nil, fmt.Errorf("notifier %s: %w", nc.Name, err)
 		}
-		m.notifiers = append(m.notifiers, n)
+		m.notifiers = append(m.notifiers, namedNotifier{nc.Name, n})
 	}
 	return m, nil
 }
 
-// Check fetches e once and notifies about unseen items. Failed sends are retried next check.
+// maxMsg keeps a digest under Telegram's 4096-character message limit.
+const maxMsg = 4000
+
+// pending is an item to announce. key is its state key ("<Key>\t<Value>" for digests);
+// prev is the state key it replaces, if any.
+type pending struct {
+	it        source.Item
+	key, prev string
+}
+
+// Check fetches e once and notifies about unseen items. A failed send is retried next
+// check for that notifier only; deliveries so far are kept under "<source>@<notifier>".
+// Digest sources report changed values only: a Key seen for the first time is recorded silently.
 func (m *Monitor) Check(ctx context.Context, e *Entry) (int, error) {
 	e.mu.Lock()
 	defer e.mu.Unlock()
@@ -79,35 +97,46 @@ func (m *Monitor) Check(ctx context.Context, e *Entry) (int, error) {
 		return 0, err
 	}
 	seeding := !m.state.Has(e.ID)
-	sent, failed := 0, 0
+	var todo []pending
 	for _, it := range items {
-		if m.state.Seen(e.ID, it.Key) {
+		p := pending{it: it, key: it.Key}
+		if e.Digest {
+			p.key = it.Key + "\t" + it.Value
+		}
+		if m.state.Seen(e.ID, p.key) {
 			continue
+		}
+		if e.Digest {
+			old, ok := m.state.Find(e.ID, it.Key+"\t")
+			if !ok {
+				m.state.Add(e.ID, p.key)
+				continue
+			}
+			p.it.Old, p.prev = old, it.Key+"\t"+old
 		}
 		if seeding && !m.NotifyOnSeed {
-			m.state.Add(e.ID, it.Key)
+			m.state.Add(e.ID, p.key)
 			continue
 		}
-		var b strings.Builder
-		if err := e.Tmpl.Execute(&b, it); err != nil {
-			slog.Error("render", "source", e.ID, "key", it.Key, "err", err)
-			failed++
+		todo = append(todo, p)
+	}
+	sent, failed := 0, 0
+	for _, batch := range m.batches(e, todo) {
+		if !m.deliver(ctx, e, batch) {
+			failed += len(batch)
 			continue
 		}
-		ok := true
-		for _, n := range m.notifiers {
-			if err := n.Send(ctx, b.String()); err != nil {
-				slog.Error("send", "source", e.ID, "key", it.Key, "err", err)
-				ok = false
+		for _, p := range batch {
+			m.state.Add(e.ID, p.key)
+			if p.prev != "" {
+				m.state.Delete(e.ID, p.prev)
 			}
+			for _, n := range m.notifiers {
+				m.state.Delete(e.ID+"@"+n.name, p.key)
+			}
+			sent++
+			slog.Info("notified", "source", e.ID, "key", p.it.Key)
 		}
-		if !ok {
-			failed++
-			continue
-		}
-		m.state.Add(e.ID, it.Key)
-		sent++
-		slog.Info("notified", "source", e.ID, "key", it.Key)
 	}
 	m.state.Mark(e.ID) // seeding with zero items still counts as seeded
 	if seeding {
@@ -120,6 +149,69 @@ func (m *Monitor) Check(ctx context.Context, e *Entry) (int, error) {
 		return sent, fmt.Errorf("%d item(s) failed, will retry", failed)
 	}
 	return sent, nil
+}
+
+// batches groups items into messages: one per item, or for digests as many items as fit in maxMsg.
+func (m *Monitor) batches(e *Entry, todo []pending) [][]pending {
+	var out [][]pending
+	for _, p := range todo {
+		if e.Digest && len(out) > 0 {
+			last := out[len(out)-1]
+			if s, err := render(e, append(last[:len(last):len(last)], p)); err == nil && len(s) <= maxMsg {
+				out[len(out)-1] = append(last, p)
+				continue
+			}
+		}
+		out = append(out, []pending{p})
+	}
+	return out
+}
+
+// deliver sends batch to every notifier that hasn't got it yet and records per-notifier progress.
+// ponytail: if a value changes again while a delivery is pending, the old "@notifier" key stays behind.
+func (m *Monitor) deliver(ctx context.Context, e *Entry, batch []pending) bool {
+	ok := true
+	for _, n := range m.notifiers {
+		sub := e.ID + "@" + n.name
+		var rest []pending
+		for _, p := range batch {
+			if !m.state.Seen(sub, p.key) {
+				rest = append(rest, p)
+			}
+		}
+		if len(rest) == 0 {
+			continue
+		}
+		text, err := render(e, rest)
+		if err != nil {
+			slog.Error("render", "source", e.ID, "key", rest[0].it.Key, "err", err)
+			return false
+		}
+		if err := n.Send(ctx, text); err != nil {
+			slog.Error("send", "source", e.ID, "key", rest[0].it.Key, "items", len(rest), "notifier", n.name, "err", err)
+			ok = false
+			continue
+		}
+		for _, p := range rest {
+			m.state.Add(sub, p.key)
+		}
+	}
+	return ok
+}
+
+// render executes e's template with the batch's items: a slice for digests, else the single item.
+func render(e *Entry, batch []pending) (string, error) {
+	var data any = batch[0].it
+	if e.Digest {
+		items := make([]source.Item, len(batch))
+		for i, p := range batch {
+			items[i] = p.it
+		}
+		data = items
+	}
+	var b strings.Builder
+	err := e.Tmpl.Execute(&b, data)
+	return b.String(), err
 }
 
 // RunAll checks every source once and returns one summary line per source.

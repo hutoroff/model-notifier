@@ -7,6 +7,7 @@ import (
 	"io/fs"
 	"os"
 	"path/filepath"
+	"strings"
 	"sync"
 	"time"
 )
@@ -73,6 +74,28 @@ func (s *State) Add(src, key string) {
 	m := s.mark(src)
 	if _, ok := m[key]; !ok {
 		m[key] = time.Now().UTC()
+	}
+}
+
+// Find returns the rest of the first key in src that starts with prefix.
+func (s *State) Find(src, prefix string) (string, bool) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	for k := range s.seen[src] {
+		if rest, ok := strings.CutPrefix(k, prefix); ok {
+			return rest, true
+		}
+	}
+	return "", false
+}
+
+// Delete removes key from src, and src itself once empty.
+func (s *State) Delete(src, key string) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	delete(s.seen[src], key)
+	if len(s.seen[src]) == 0 {
+		delete(s.seen, src)
 	}
 }
 

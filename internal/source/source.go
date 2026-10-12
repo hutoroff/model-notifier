@@ -17,6 +17,8 @@ type Item struct {
 	Key    string
 	Link   string
 	Fields map[string]string
+	Value  string // tracked value (webpage "value"); changes of it are reported per Key
+	Old    string // previous Value, set by the monitor before rendering
 }
 
 type Source interface {

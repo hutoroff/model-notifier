@@ -3,6 +3,8 @@ package source
 import (
 	"context"
 	"errors"
+	"html/template"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -11,6 +13,9 @@ import (
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/antchfx/htmlquery"
+	"github.com/antchfx/xpath"
 
 	"github.com/hutoroff/model-notifier/internal/config"
 )
@@ -264,6 +269,82 @@ func TestXAISDK(t *testing.T) {
 	sc.Filter = ""
 	if n := len(parseFeed(t, sc, "xai-releases.atom")); n != 10 {
 		t.Errorf("no filter: got %d items, want 10", n)
+	}
+}
+
+// pricing parses a value-tracking source, checks its row count and some key → value pairs,
+// and that its digest template renders.
+func pricing(t *testing.T, id, file string, n int, want map[string]string) {
+	t.Helper()
+	items := parseWeb(t, id, file)
+	if len(items) != n {
+		t.Errorf("%d items, want %d", len(items), n)
+	}
+	got := map[string]string{}
+	for _, it := range items {
+		got[it.Key] = it.Value
+	}
+	for k, v := range want {
+		if got[k] != v {
+			t.Errorf("%q = %q, want %q", k, got[k], v)
+		}
+	}
+	tmpl := template.Must(template.New(id).Parse(cfg(t, id).Template))
+	items[0].Old = "$1"
+	if err := tmpl.Execute(io.Discard, items[:1]); err != nil {
+		t.Error(err)
+	}
+}
+
+func TestAnthropicPricing(t *testing.T) {
+	pricing(t, "anthropic/pricing", "anthropic-pricing.html", 44, map[string]string{
+		"Model pricing · Claude Opus 5.5":                                        "$4 · $20 · $5 · $8 · $0.20",
+		"Model pricing · Claude Haiku 5.5 · for prompts over 100,000 tokens":     "$0.50 · $2.50 · $0.625 · $1 · $0.05", // rowspan continuation
+		"Batch processing · Claude Haiku 5.5 · for prompts up to 100,000 tokens": "$0.05 · $0.25",
+		"Fast mode pricing · Claude Opus 5 / Claude Opus 4.8":                    "$10 / MTok · $50 / MTok",
+	})
+}
+
+func TestOpenAIPricing(t *testing.T) {
+	pricing(t, "openai/pricing", "openai-pricing.html", 48, map[string]string{
+		"text-tokens · standard · gpt-6-astra":           "$10.00 · $1.00 · $12.50 · $50.00 · $20.00 · $2.00 · $25.00 · $75.00",
+		"text-tokens · ultrafast · gpt-6.1-sol":          "$12.00 · $0.60 · $15.00 · $60.00 · $24.00 · $1.20 · $30.00 · $90.00",
+		"audio-tokens · gpt-realtime-2.1 · Text":         "$4.00 · $0.40 · $24.00", // rowspan continuation
+		"image-generation · batch · gpt-image-2 · Image": "$4.00 · $1.00 · $15.00",
+		"cyber-models · gpt-5.6-cyber":                   "$12.50 · $1.25 · $15.625 · $75.00 · - · - · - · -",
+	})
+}
+
+func TestGooglePricing(t *testing.T) {
+	pricing(t, "google/pricing", "google-pricing.html", 291, map[string]string{
+		"gemini-3.8-flash · Standard · Input price":                            "$0.75 through December 31, 2026. $1.50 starting January 1, 2027.", // <br>
+		"gemini-2.5-pro · Batch · Grounding with Google Maps":                  "Not available",
+		"gemini-2.5-pro · Priority · Output price (including thinking tokens)": "$18.00, prompts <= 200k tokens $27.00, prompts > 200k",
+		"veo-3.1 · Veo 3.1 Fast video with audio price (default)":              "$0.10 (720p) $0.12 (1080p) $0.30 (4k)", // no tier tabs
+	})
+}
+
+func TestXAIPricing(t *testing.T) {
+	pricing(t, "xai/pricing", "xai-pricing.html", 44, map[string]string{
+		"Text API · grok-4.7":                             "$2.00 · $0.50 · $6.00 · $4.00 · $1.00 · $12.00",
+		"Imagine API · grok-imagine-video-1.5 · 720p":     "$0.14 / sec", // rowspan continuation
+		"Imagine API · grok-imagine-image-2.0 · 1K · Low": "$0.01 / img · $0.04 / img",
+		"Voice API · Text to Speech":                      "$15.00 / 1M chars",
+		"Priority Processing Pricing · Token pricing":     "2x standard rates",
+	})
+}
+
+func TestEval(t *testing.T) {
+	doc, _ := htmlquery.Parse(strings.NewReader(`<table><tr><td>a<br>b</td><td> x </td><td></td></tr></table>`))
+	tr := htmlquery.FindOne(doc, "//tr")
+	for expr, want := range map[string]string{
+		"./td":               "a b · x", // node-set joined, empty nodes skipped, <br> → space
+		"concat(td[2], '-')": "x -",     // string result as is
+		"count(td)":          "3",
+	} {
+		if got := eval(tr, xpath.MustCompile(expr)); got != want {
+			t.Errorf("%s = %q, want %q", expr, got, want)
+		}
 	}
 }
 

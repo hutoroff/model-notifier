@@ -8,6 +8,10 @@ notifiers:
     type: telegram
     token: ${TG_BOT_TOKEN}
     chat_id: ${TG_CHAT_ID}
+  # - name: slack                     # name must be unique; it keys per-notifier delivery state
+  #   type: slack
+  #   token: ${SLACK_BOT_TOKEN}       # xoxb-… bot token with chat:write
+  #   chat_id: ${SLACK_CHANNEL_ID}    # channel id (C…), not the #name
 
 providers:
   - name: anthropic
@@ -32,6 +36,26 @@ providers:
           📦 <b>anthropic-sdk-python {{.Fields.title}}</b> adds: <code>{{.Fields.matches}}</code>
           <a href="{{.Link}}">Release notes</a>
 
+      - name: pricing
+        type: webpage
+        url: https://platform.claude.com/docs/en/about-claude/pricing
+        interval: 1h
+        # Rows of the Model pricing, Batch processing and Fast mode tables (the ones with Input + Output columns).
+        items: "//table[.//th[normalize-space()='Input']][.//th[normalize-space()='Output']]//tbody/tr[td]"
+        # key/value set → change tracker: one digest per check of rows whose value changed; new rows are recorded silently.
+        # Key = section · model name (no tagline/status glyph) · tier qualifier. Haiku's rowspan=2 continuation
+        # row starts with a price, so its name comes from the row above.
+        key: >-
+          ./preceding::*[self::h2 or self::h3][1]//text()[normalize-space()][1]
+          | ./self::tr[not(starts-with(normalize-space(td[1]),'$'))]/td[1]//text()[normalize-space()][not(ancestor::button)][1]
+          | ./self::tr[starts-with(normalize-space(td[1]),'$')]/preceding-sibling::tr[td[@rowspan='2']][1]/td[1]//text()[normalize-space()][not(ancestor::button)][1]
+          | ./td[starts-with(normalize-space(),'$')][1]//span[starts-with(normalize-space(),'for ')]
+        value: "./td//text()[starts-with(normalize-space(),'$')]"   # node-set → joined with " · "
+        template: |
+          💲 <b>Anthropic</b> pricing changed (input · output · 5m write · 1h write · cache hit, per MTok)
+          {{range .}}• <b>{{.Key}}</b>: {{.Old}} → <b>{{.Value}}</b>
+          {{end}}<a href="https://platform.claude.com/docs/en/about-claude/pricing">Pricing</a>
+
   - name: openai
     sources:
       - name: changelog
@@ -53,6 +77,28 @@ providers:
         template: |
           📦 <b>openai-python {{.Fields.title}}</b>: {{.Fields.matches}}
           <a href="{{.Link}}">Release notes</a>
+
+      - name: pricing
+        type: webpage
+        # openai.com/api/pricing/ redirects to ChatGPT Business seats; API token prices live here.
+        # ponytail: only the rows rendered server-side (newest 2-4 per table); legacy models sit in astro-island
+        # JSON props behind "All models". Add a props-JSON source type if their prices matter.
+        url: https://developers.openai.com/api/docs/pricing
+        interval: 1h
+        items: "//table[not(preceding::*[self::h2 or self::h3][@id][1][@id='built-in-tools'])]/tbody/tr"   # tools table is prose
+        # Key = section id · tier tab (standard|batch|flex|fast|ultrafast; absent on tab-less tables) · model · modality.
+        # A full row has as many cells as the last header row; rowspan continuation rows take the model from above.
+        key: >-
+          ./preceding::*[self::h2 or self::h3][@id][1]/@id
+          | ./ancestor::div[@data-content-switcher-pane][1]/@data-value
+          | ./self::tr[count(td)=count(ancestor::table[1]/thead/tr[last()]/th)]/td[1]
+          | ./self::tr[not(count(td)=count(ancestor::table[1]/thead/tr[last()]/th))]/preceding-sibling::tr[count(td)=count(ancestor::table[1]/thead/tr[last()]/th)][1]/td[1]
+          | ./self::tr[ancestor::table[1]/thead//th[normalize-space()='Modality']]/td[not(@rowspan)][1]
+        value: "./td[starts-with(normalize-space(),'$') or normalize-space()='-']"
+        template: |
+          💲 <b>OpenAI</b> pricing changed (per 1M tokens unless noted)
+          {{range .}}• <b>{{.Key}}</b>: {{.Old}} → <b>{{.Value}}</b>
+          {{end}}<a href="https://developers.openai.com/api/docs/pricing">Pricing</a>
 
   - name: google
     sources:
@@ -77,6 +123,21 @@ providers:
           📦 <b>python-genai {{.Fields.title}}</b>: {{.Fields.matches}}
           <a href="{{.Link}}">Release notes</a>
 
+      - name: pricing
+        type: webpage
+        url: https://ai.google.dev/gemini-api/docs/pricing
+        interval: 1h
+        # Every table row except "Used to improve our products" and the prose-only agents section.
+        # preceding::*[self::h2], not preceding::h2: antchfx gets name-test + [1] on reverse axes wrong (see AGENTS.md).
+        items: "//table//tr[td][not(starts-with(normalize-space(td[1]),'Used to improve'))][not(preceding::*[self::h2][@data-text][1]/@id='pricing-for-agents')]"
+        # Key = model section id · tier tab (absent outside tab selectors, e.g. Veo/Lyria) · row label.
+        key: "./preceding::*[self::h2][@data-text][1]/@id | ./ancestor::section[h3][1]/h3/@data-text | ./td[1]"
+        value: "./td[3]"   # paid tier only
+        template: |
+          💲 <b>Google</b> Gemini API pricing changed (paid tier, per 1M tokens unless noted)
+          {{range .}}• <b>{{.Key}}</b>: {{.Old}} → <b>{{.Value}}</b>
+          {{end}}<a href="https://ai.google.dev/gemini-api/docs/pricing">Pricing</a>
+
   - name: xai
     sources:
       - name: api
@@ -100,3 +161,23 @@ providers:
         template: |
           📦 <b>xai-sdk-python {{.Fields.title}}</b>: {{.Fields.matches}}
           <a href="{{.Link}}">Release notes</a>
+      - name: pricing
+        type: webpage
+        url: https://docs.x.ai/developers/pricing   # richer than x.ai/api: all models, cached/long context, tools
+        interval: 1h
+        # Rows with a price-like cell ($, % discount, "Nx standard rates") past the first column.
+        items: "//table/tbody/tr[td[position()>1][contains(.,'$') or contains(.,'%') or contains(.,'standard rates')]]"
+        # Key = section heading · model or row label · resolution (Imagine). Imagine rowspan continuation rows
+        # have no model link; it comes from the nearest row above that has one.
+        key: >-
+          ./preceding::*[self::h2 or self::h3][1]
+          | ./self::tr[not(ancestor::table[1]/thead//th[normalize-space()='Resolution'])]/td[1]/a
+          | ./self::tr[not(ancestor::table[1]/thead//th[normalize-space()='Resolution'])]/td[1][not(a)]
+          | ./self::tr[ancestor::table[1]/thead//th[normalize-space()='Resolution']]/td[1]/a
+          | ./self::tr[ancestor::table[1]/thead//th[normalize-space()='Resolution']][not(td/a)]/preceding-sibling::tr[td/a][1]/td[1]/a
+          | ./self::tr[ancestor::table[1]/thead//th[normalize-space()='Resolution']]/td[last()-1]
+        value: "./td[position()>1][contains(.,'$') or contains(.,'%') or contains(.,'standard rates')]"
+        template: |
+          💲 <b>xAI</b> API pricing changed (per 1M tokens unless noted)
+          {{range .}}• <b>{{.Key}}</b>: {{.Old}} → <b>{{.Value}}</b>
+          {{end}}<a href="https://docs.x.ai/developers/pricing">Pricing</a>
